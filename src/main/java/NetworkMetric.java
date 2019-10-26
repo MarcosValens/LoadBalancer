@@ -1,5 +1,9 @@
 import java.io.IOException;
 
+/*
+* ES NECESARIO INSTALAR NET-TOOLS PARA USAR ESTA METRICA ($sudo apt-install net-tools)
+* */
+
 public class NetworkMetric implements Metric {
 
     public int getLoad() throws IOException {
