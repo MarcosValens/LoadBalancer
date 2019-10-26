@@ -10,11 +10,11 @@ public class Member {
     }
 
     public boolean isEnabled() {
-        try{
+        try {
             InetAddress address = InetAddress.getByName("localhost");
             return address.isReachable(10000);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -27,5 +27,4 @@ public class Member {
     public String getUrl() {
         return url;
     }
-
 }

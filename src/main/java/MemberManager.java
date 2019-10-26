@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 public class MemberManager {
     private ArrayList<Member> members;
+
     public Member addMember() {
-        return new Member("Member"+(this.members.size()+1));
+        return new Member("Member" + (this.members.size() + 1));
     }
 
     public void removeMember(Member member) {

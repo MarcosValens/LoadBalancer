@@ -16,10 +16,10 @@ public class App {
         ArrayList<Member> members = new ArrayList<>();
         members.add(member1);
         MemberManager memberManager = new MemberManager(members);
-        LoadBalancer loadBalancer = new LoadBalancer(requests,memberManager);
+        LoadBalancer loadBalancer = new LoadBalancer(requests, memberManager);
         loadBalancer.setMetric();
         loadBalancer.selectStrategy();
-        for (Request request:requests) {
+        for (Request request : requests) {
             loadBalancer.resolveRequest(request);
         }
     }

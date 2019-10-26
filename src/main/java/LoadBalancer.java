@@ -13,16 +13,16 @@ public class LoadBalancer {
         while (true) {
             Member memberSelected = this.strategy.makeStrategy(memberManager.getMembers());
             memberSelected.selectMetric(this.metric);
-            System.out.println("Member seleccionado: "+memberSelected.getUrl());
+            System.out.println("Member seleccionado: " + memberSelected.getUrl());
             if (this.isOverloaded(memberSelected)) {
-                Response response = new Response(request.getUrl(),memberSelected.getUrl());
-                System.out.println("Respondiendo a: " + response.getUrl()+"\nRespuesta: " + response.getResponseURL());
+                Response response = new Response(request.getUrl(), memberSelected.getUrl());
+                System.out.println("Respondiendo a: " + response.getUrl() + "\nRespuesta: " + response.getResponseURL());
                 return response;
             } else {
                 Member newMember = memberManager.addMember();
                 newMember.selectMetric(this.metric);
                 memberManager.setMembers(newMember);
-                System.out.println("Member sobrecargado...\nCreando "+newMember.getUrl());
+                System.out.println("Member sobrecargado...\nCreando " + newMember.getUrl());
             }
         }
     }
