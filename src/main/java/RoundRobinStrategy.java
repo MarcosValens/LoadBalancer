@@ -4,10 +4,11 @@ public class RoundRobinStrategy implements Strategy {
     private int nextNode;
 
     public Member makeStrategy(ArrayList<Member> members) {
-        this.nextNode++;
-        if (this.nextNode > members.size()+1){
-            this.nextNode = 1;
+
+        if (this.nextNode == members.size()){
+            this.nextNode = 0;
         }
+        this.nextNode++;
         return members.get(this.nextNode-1);
     }
 }

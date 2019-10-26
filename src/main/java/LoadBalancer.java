@@ -1,28 +1,53 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LoadBalancer {
     private ArrayList<Request> requests;
-    private int maxLoad = 80;
+    private int maxLoad = 1;
     private MemberManager memberManager;
     private Strategy strategy;
     private Metric metric;
 
-    public Response resolveRequest(Request request){
-        return  null;
+    public Response resolveRequest(Request request) throws IOException {
+        while (true) {
+            Member memberSelected = this.strategy.makeStrategy(memberManager.getMembers());
+            memberSelected.selectMetric(this.metric);
+            if (this.isOverloaded(memberSelected)) {
+                return new Response(request.getUrl(),memberSelected.getUrl());
+            } else {
+                Member newMember = memberManager.addMember();
+                newMember.selectMetric(this.metric);
+                memberManager.setMembers(newMember);
+            }
+        }
     }
 
-    private boolean isOverloaded(Member member){
-        return true;
+    private boolean isOverloaded(Member member) throws IOException {
+        if (!member.isEnabled()) {
+            memberManager.removeMember(member);
+        } else return this.metric.getLoad() < maxLoad;
+        return false;
     }
 
-    public void selectStrategy(Strategy strategy){
-        this.strategy = strategy;
-    }
-
-    public LoadBalancer(ArrayList<Request> requests, MemberManager memberManager) {
-        this.requests = requests;
-        this.memberManager = memberManager;
+    public void selectStrategy(/*Strategy strategy*/) {
+        boolean repeat = true;
+        System.out.println("Select Strategy:\nPress 1 for RoundRobin\nPress 2 Random");
+        Scanner input = new Scanner(System.in);
+        while (repeat) {
+            switch (input.nextInt()) {
+                case 1:
+                    this.strategy = new RoundRobinStrategy();
+                    repeat = false;
+                    break;
+                case 2:
+                    this.strategy = new RandomStrategy();
+                    repeat = false;
+                    break;
+                default:
+                    System.out.println("Incorrect selection.\nPress 1 for RoundRobin\nPress 2 for Random");
+            }
+        }
     }
 
     public void setMetric() {
@@ -53,5 +78,10 @@ public class LoadBalancer {
                             "\nPress 3 for Network Metric\nPress 4 for DiskSpace Metric");
             }
         }
+    }
+
+    public LoadBalancer(ArrayList<Request> requests, MemberManager memberManager) {
+        this.requests = requests;
+        this.memberManager = memberManager;
     }
 }

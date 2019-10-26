@@ -17,4 +17,8 @@ public class MemberManager {
     public ArrayList<Member> getMembers() {
         return members;
     }
+
+    public void setMembers(Member member) {
+        this.members.add(member);
+    }
 }
