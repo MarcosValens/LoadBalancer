@@ -1,7 +1,7 @@
-import java.io.IOException;
 import java.net.InetAddress;
 
 public class Member {
+
     private String url;
     private Metric metric;
 

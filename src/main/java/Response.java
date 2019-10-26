@@ -1,4 +1,5 @@
 public class Response {
+
     private String url;
     private String responseURL;
 

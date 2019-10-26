@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class App {
+
     public static void main(String[] args) throws IOException {
         Request request1 = new Request("request1");
         Request request2 = new Request("request2");

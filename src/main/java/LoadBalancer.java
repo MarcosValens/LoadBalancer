@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LoadBalancer {
+
     private ArrayList<Request> requests;
     private int maxLoad = 80;
     private MemberManager memberManager;
