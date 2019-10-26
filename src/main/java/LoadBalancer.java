@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class LoadBalancer {
     private ArrayList<Request> requests;
-    private int maxLoad = 1;
+    private int maxLoad = 80;
     private MemberManager memberManager;
     private Strategy strategy;
     private Metric metric;
@@ -13,12 +13,16 @@ public class LoadBalancer {
         while (true) {
             Member memberSelected = this.strategy.makeStrategy(memberManager.getMembers());
             memberSelected.selectMetric(this.metric);
+            System.out.println("Member seleccionado: "+memberSelected.getUrl());
             if (this.isOverloaded(memberSelected)) {
-                return new Response(request.getUrl(),memberSelected.getUrl());
+                Response response = new Response(request.getUrl(),memberSelected.getUrl());
+                System.out.println("Respondiendo a: " + response.getUrl()+"\nRespuesta: " + response.getResponseURL());
+                return response;
             } else {
                 Member newMember = memberManager.addMember();
                 newMember.selectMetric(this.metric);
                 memberManager.setMembers(newMember);
+                System.out.println("Member sobrecargado...\nCreando "+newMember.getUrl());
             }
         }
     }

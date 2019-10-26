@@ -6,4 +6,12 @@ public class Response {
         this.url = url;
         this.responseURL = responseURL;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getResponseURL() {
+        return responseURL;
+    }
 }
